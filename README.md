@@ -146,30 +146,64 @@ Softmax
 - Dropout: 0.3
 - Clases: 2 (Normal/Anormal)
 
-## Ejecución
+# Instalación
 
-```bash
-# Instalar dependencias
-pip install -r requirements.txt
+## Requisitos
 
-# Ejecutar en desarrollo
-python main.py
+- Python **3.12+**
+- **pip**
+- **Windows PowerShell**
 
-# O con uvicorn
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+---
+
+## Instalación Automática (Recomendado)
+
+Ejecuta el script:
+
+```powershell
+.\install.ps1
 ```
 
-## Testing
+Este script realiza automáticamente:
+* Creación del entorno virtual
+* Activación del entorno
+* Actualización de pip, setuptools y wheel
+* Instalación de PyTorch (CPU)
+* Instalación de dependencias del proyecto
+
+Al finalizar verás:
+
+```
+✅ Instalación completa. Ejecuta: python main.py
+```
+
+## Instalación Manual (Alternativa)
 
 ```bash
-# Ejecutar todos los tests
-pytest
+python -m venv venv
 
-# Ejecutar test específico
-pytest tests/test_ecg_flow.py
+# Windows
+venv\Scripts\activate
 
-# Verbose
-pytest -v tests/
+python -m pip install --upgrade pip setuptools wheel
+
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+pip install -r requirements.txt
+```
+
+## Ejecución
+
+### Ejecutar el backend
+
+```bash
+python main.py
+```
+
+### Ejecutar con Uvicorn
+
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ## Variables de Entorno
