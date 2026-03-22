@@ -9,29 +9,29 @@ import numpy as np
 CLASS_NAMES_AAMI = ["Normal", "SVEB", "VEB", "Fusion", "Unknown"]
 
 
-class ECG_BiLSTM(nn.Module):
+class BiLSTMModel(nn.Module):
     """Arquitectura BiLSTM para clasificación de ECG"""
 
     def __init__(
         self,
         input_size=1,
-        hidden_size1=128,
-        hidden_size2=64,
+        hidden_size_1=128,
+        hidden_size_2=64,
         num_classes=5,
         dropout=0.3,
     ):
         super().__init__()
         self.lstm1 = nn.LSTM(
-            input_size, hidden_size1, batch_first=True, bidirectional=True
+            input_size, hidden_size_1, batch_first=True, bidirectional=True
         )
-        self.bn1 = nn.BatchNorm1d(hidden_size1 * 2)
+        self.bn1 = nn.BatchNorm1d(hidden_size_1 * 2)
         self.drop1 = nn.Dropout(dropout)
         self.lstm2 = nn.LSTM(
-            hidden_size1 * 2, hidden_size2, batch_first=True, bidirectional=True
+            hidden_size_1 * 2, hidden_size_2, batch_first=True, bidirectional=True
         )
-        self.bn2 = nn.BatchNorm1d(hidden_size2 * 2)
+        self.bn2 = nn.BatchNorm1d(hidden_size_2 * 2)
         self.drop2 = nn.Dropout(dropout)
-        self.fc1 = nn.Linear(hidden_size2 * 2, 64)
+        self.fc1 = nn.Linear(hidden_size_2 * 2, 64)
         self.drop3 = nn.Dropout(0.4)
         self.fc2 = nn.Linear(64, 32)
         self.drop4 = nn.Dropout(dropout)
@@ -71,7 +71,7 @@ class LSTMClassifier:
     }
 
     def __init__(self, model_path: Optional[str] = None):
-        self.model: Optional[ECG_BiLSTM] = None
+        self.model: Optional[BiLSTMModel] = None
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model_path = model_path or "bilstm_model.pth"
         self.window_size = 180
@@ -82,10 +82,10 @@ class LSTMClassifier:
         """Cargar el modelo LSTM entrenado"""
         try:
             if os.path.exists(self.model_path):
-                self.model = ECG_BiLSTM(
+                self.model = BiLSTMModel(
                     input_size=1,
-                    hidden_size1=128,
-                    hidden_size2=64,
+                    hidden_size_1=128,
+                    hidden_size_2=64,
                     num_classes=5,
                 ).to(self.device)
 
@@ -108,10 +108,10 @@ class LSTMClassifier:
 
     def _create_untrained_model(self):
         """Crear modelo sin entrenar para desarrollo"""
-        self.model = ECG_BiLSTM(
+        self.model = BiLSTMModel(
             input_size=1,
-            hidden_size1=128,
-            hidden_size2=64,
+            hidden_size_1=128,
+            hidden_size_2=64,
             num_classes=5,
         ).to(self.device)
         self.model.eval()

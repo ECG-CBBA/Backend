@@ -238,9 +238,9 @@ sample_normalized = scaler.transform(sample)
 
 ## Errores Comunes
 
-| Error                          | Causa                                                       | Solución                                                                                     |
-| ------------------------------ | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `Missing key(s) in state_dict` | Arquitectura del backend no coincide con el modelo guardado | Verificar que `ECG_BiLSTM` en `lstm_classifier.py` coincida con el notebook de entrenamiento |
-| `model_not_loaded`             | Archivo `.pth` no encontrado                                | Verificar `MODEL_PATH`                                                                       |
-| `WebSocket connection failed`  | Puerto bloqueado                                            | Verificar firewall                                                                           |
-| `invalid_input`                | ECG enviado con menos de 180 muestras                       | Enviar exactamente 180 muestras                                                              |
+| Error                          | Causa                                                       | Solución                                                                                      |
+| ------------------------------ | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `Missing key(s) in state_dict` | Arquitectura del backend no coincide con el modelo guardado | Verificar que `BiLSTMModel` en `lstm_classifier.py` coincida con el notebook de entrenamiento |
+| `model_not_loaded`             | Archivo `.pth` no encontrado                                | Verificar `MODEL_PATH`                                                                        |
+| `WebSocket connection failed`  | Puerto bloqueado                                            | Verificar firewall                                                                            |
+| `invalid_input`                | ECG enviado con menos de 180 muestras                       | Enviar exactamente 180 muestras                                                               |
